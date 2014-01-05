@@ -8,8 +8,10 @@ The pathfinding engine is completely decoupled from the underlying node data str
 
 Basic usage
 -------------
-    seekr = new Seekr(delegate);
-    path  = seekr.seek();
+```javascript
+seekr = new Seekr(delegate);
+path  = seekr.seek();
+```
 
 How it works
 -------------
@@ -27,35 +29,37 @@ When initializing `Seekr` you must provide a delegate.
 
 The delegate can be any object but it must implement the following functions:
 
-    start() {
-        // Return the starting node of the path
-        return startNode;
-    }
+```javascript
+start() {
+    // Return the starting node of the path
+    return startNode;
+}
 
-    end() {
-        // Return the ending node of the path
-        return endNode;
-    }
+end() {
+    // Return the ending node of the path
+    return endNode;
+}
 
-    neighbors(node) {
-        // Return an array of nodes that are neighbors of the given node
-        return neighborNodes;
-    }
+neighbors(node) {
+    // Return an array of nodes that are neighbors of the given node
+    return neighborNodes;
+}
 
-    heuristic(nodeA, nodeB) {
-        // Return the heuristic cost (a number) for the path from nodeA to nodeB
-        return theHeuristic;
-    }
+heuristic(nodeA, nodeB) {
+    // Return the heuristic cost (a number) for the path from nodeA to nodeB
+    return theHeuristic;
+}
 
-    cost(nodeA, nodeB) {
-        // Return the cost (a number) for moving form nodeA to nodeB
-        return theCost;
-    }
+cost(nodeA, nodeB) {
+    // Return the cost (a number) for moving from nodeA to nodeB
+    return theCost;
+}
 
-    equal(nodeA, nodeB) {
-        // Return a true if nodeA and nodeB are equal, false otherwise
-        return areEqual;
-    }
+equal(nodeA, nodeB) {
+    // Return true if nodeA and nodeB are equal, false otherwise
+    return areEqual;
+}
+```
 
 The *node* can be any object, `Seekr` doesn't care what nodes are and how they're represented. That is ultimately the responsability of the delegate.
 
@@ -76,32 +80,34 @@ None of these files are required, but they make it easier to demo `Seekr`'s func
 
 Here's an example from [demo.js](demo/demo.js):
 
-    // Initialize a simple grid
-    grid = new Grid2D([[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                       [0, 1, 0, 0, 1, 0, 0, 0, 1, 0],
-                       [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
-                       [0, 1, 0, 0, 0, 0, 1, 0, 3, 0],
-                       [0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-                       [0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-                       [0, 1, 2, 1, 0, 1, 0, 0, 0, 0],
-                       [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
-                       [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]);
+```javascript
+// Initialize a simple grid
+grid = new Grid2D([[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+                   [0, 1, 0, 0, 1, 0, 0, 0, 1, 0],
+                   [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
+                   [0, 1, 0, 0, 0, 0, 1, 0, 3, 0],
+                   [0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                   [0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+                   [0, 1, 2, 1, 0, 1, 0, 0, 0, 0],
+                   [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]);
 
-    // Create the artist by feeding it a Canvas object
-    artist = new Grid2DArtist(document.getElementById('main-canvas'));
+// Create the artist by feeding it a Canvas object
+artist = new Grid2DArtist(document.getElementById('main-canvas'));
 
-    // Create the delegate by feeding it the grid
-    delegate = new SeekrGrid2DDelegate(grid);
+// Create the delegate by feeding it the grid
+delegate = new SeekrGrid2DDelegate(grid);
 
-    // Create the Seekr by feeding it the delegate
-    seekr = new Seekr(delegate);
+// Create the Seekr by feeding it the delegate
+seekr = new Seekr(delegate);
 
-    // Find the shortest path
-    path = seekr.seek();
+// Find the shortest path
+path = seekr.seek();
 
-    // Optionally update the grid to include the path (for drawing)
+// Optionally update the grid to include the path (for drawing)
 
-    // Draw the grid
-    artist.draw(grid);
+// Draw the grid
+artist.draw(grid);
+```
 
 The bulk of the work is done by `seekr.seek()`. The rest of the code is primarily for setting up and drawing the grid.
