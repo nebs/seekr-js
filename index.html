@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Seekr-js by nebspetrovic</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Seekr-js</h1>
+          <h2>Flexible JS Pathfinding Engine</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/nebspetrovic/seekr-js/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/nebspetrovic/seekr-js/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/nebspetrovic/seekr-js" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="seekrjs" class="anchor" href="#seekrjs"><span class="octicon octicon-link"></span></a>SeekrJS</h1>
+
+<p>SeekrJS is a flexible pathfinding engine written in Javascript.</p>
+
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>The pathfinding engine is completely decoupled from the underlying node data structure. So it works equally well with graphs and grids for example.</p>
+
+<h2>
+<a name="basic-usage" class="anchor" href="#basic-usage"><span class="octicon octicon-link"></span></a>Basic usage</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">seekr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Seekr</span><span class="p">(</span><span class="nx">delegate</span><span class="p">);</span>
+<span class="nx">path</span>  <span class="o">=</span> <span class="nx">seekr</span><span class="p">.</span><span class="nx">seek</span><span class="p">();</span>
+</pre></div>
+
+<h2>
+<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h2>
+
+<p>The pathfinding is handled by <a href="seekr.js">Seekr</a>.</p>
+
+<p><code>Seekr</code> knows nothing about how your nodes are structures. For that, it relies on the delegate.</p>
+
+<p>Once you initialize <code>Seekr</code> with a delegate, simply call <code>seek()</code> and it will return an array of nodes representing the shortest path between the start and end nodes.</p>
+
+<p>The delegate defines which nodes are the start and end nodes of the path.</p>
+
+<h2>
+<a name="delegate" class="anchor" href="#delegate"><span class="octicon octicon-link"></span></a>Delegate</h2>
+
+<p>When initializing <code>Seekr</code> you must provide a delegate.</p>
+
+<p>The delegate can be any object but it must implement the following functions:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Return the starting node of the path</span>
+    <span class="k">return</span> <span class="nx">startNode</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">end</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Return the ending node of the path</span>
+    <span class="k">return</span> <span class="nx">endNode</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">neighbors</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Return an array of nodes that are neighbors of the given node</span>
+    <span class="k">return</span> <span class="nx">neighborNodes</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">heuristic</span><span class="p">(</span><span class="nx">nodeA</span><span class="p">,</span> <span class="nx">nodeB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Return the heuristic cost (a number) for the path from nodeA to nodeB</span>
+    <span class="k">return</span> <span class="nx">theHeuristic</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">cost</span><span class="p">(</span><span class="nx">nodeA</span><span class="p">,</span> <span class="nx">nodeB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Return the cost (a number) for moving from nodeA to nodeB</span>
+    <span class="k">return</span> <span class="nx">theCost</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">equal</span><span class="p">(</span><span class="nx">nodeA</span><span class="p">,</span> <span class="nx">nodeB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Return true if nodeA and nodeB are equal, false otherwise</span>
+    <span class="k">return</span> <span class="nx">areEqual</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>The <em>node</em> can be any object, <code>Seekr</code> doesn't care what nodes are and how they're represented. That is ultimately the responsability of the delegate.</p>
+
+<h2>
+<a name="2d-grid-demo" class="anchor" href="#2d-grid-demo"><span class="octicon octicon-link"></span></a>2D Grid Demo</h2>
+
+<p>The most common use of pathfinding algorithms is with 2D grids.</p>
+
+<p><code>Seekr</code> can easily be used for this puspose.</p>
+
+<p>There are a few included objects to demonstrate this:</p>
+
+<ul>
+<li>
+<a href="delegates/seekr-grid-2d-delegate.js">SeekrGrid2DDelegate</a> : A sample delegate for 2D grids</li>
+<li>
+<a href="grid2d/grid2d.js">Grid2D</a> : An object for representing 2D grids</li>
+<li>
+<a href="grid2d/grid2d-artist.js">Grid2DArtist</a> : An object for drawing 2D grids</li>
+</ul><p>None of these files are required, but they make it easier to demo <code>Seekr</code>'s functionality.</p>
+
+<p>Here's an example from <a href="demo/demo.js">demo.js</a>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// Initialize a simple grid</span>
+<span class="nx">grid</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Grid2D</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]);</span>
+
+<span class="c1">// Create the artist by feeding it a Canvas object</span>
+<span class="nx">artist</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Grid2DArtist</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'main-canvas'</span><span class="p">));</span>
+
+<span class="c1">// Create the delegate by feeding it the grid</span>
+<span class="nx">delegate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SeekrGrid2DDelegate</span><span class="p">(</span><span class="nx">grid</span><span class="p">);</span>
+
+<span class="c1">// Create the Seekr by feeding it the delegate</span>
+<span class="nx">seekr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Seekr</span><span class="p">(</span><span class="nx">delegate</span><span class="p">);</span>
+
+<span class="c1">// Find the shortest path</span>
+<span class="nx">path</span> <span class="o">=</span> <span class="nx">seekr</span><span class="p">.</span><span class="nx">seek</span><span class="p">();</span>
+
+<span class="c1">// Optionally update the grid to include the path (for drawing)</span>
+
+<span class="c1">// Draw the grid</span>
+<span class="nx">artist</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">grid</span><span class="p">);</span>
+</pre></div>
+
+<p>The bulk of the work is done by <code>seekr.seek()</code>. The rest of the code is primarily for setting up and drawing the grid.</p>
+        </section>
+
+        <footer>
+          Seekr-js is maintained by <a href="https://github.com/nebspetrovic">nebspetrovic</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
