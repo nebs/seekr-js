@@ -102,17 +102,17 @@ Seekr.prototype.closeNode = function(node) {
   delete this.openNodes[key];
 };
 
-Seekr.prototype.addParent = function(parentNode, childNode) {
-  this.parents[this.uid(childNode)] = parentNode;
-}
-
 Seekr.prototype.isClosed = function(node) {
-  return this.closedNodes[this.uid(node)];
+  return !!this.closedNodes[this.uid(node)];
 };
 
 Seekr.prototype.isOpen = function(node) {
-  return this.openNodes[this.uid(node)];
+  return !!this.openNodes[this.uid(node)];
 };
+
+Seekr.prototype.addParent = function(parentNode, childNode) {
+  this.parents[this.uid(childNode)] = parentNode;
+}
 
 Seekr.prototype.parentOf = function(node) {
   return this.parents[this.uid(node)];
@@ -122,15 +122,15 @@ Seekr.prototype.scoresFor = function(node) {
   var key = this.uid(node);
 
   if (!this.scores[key]) {
-    this.scores[key] = {};
+    this.scores[key] = { g: 0, h: 0 };
   }
 
   return this.scores[key];
 };
 
 Seekr.prototype.closestOpenNode = function() {
-  var lowestF         = Infinity,
-      nodeWithLowestF = null;
+  var lowestF = Infinity,
+      nodeWithLowestF;
 
   for (var key in this.openNodes) {
     var node = this.openNodes[key];
