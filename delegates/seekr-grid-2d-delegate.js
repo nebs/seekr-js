@@ -21,15 +21,6 @@ SeekrGrid2DDelegate.prototype.isAccessible = function(x, y, new_x, new_y) {
   return this.grid.cellAt(new_x, new_y) != 1;
 };
 
-SeekrGrid2DDelegate.prototype.addNewAdjacentNodeToArray = function(array, x, y, new_x, new_y, cost) {
-  if (this.isAccessible(x, y, new_x, new_y)) {
-    array.push({
-      x: new_x,
-      y: new_y
-    });
-  }
-};
-
 SeekrGrid2DDelegate.prototype.start = function() {
   return this.grid.coordinatesOfCellWithPredicate(function(cell){
     return cell == 2;
@@ -43,17 +34,26 @@ SeekrGrid2DDelegate.prototype.end = function() {
 };
 
 SeekrGrid2DDelegate.prototype.neighbors = function(node) {
-  adjacentNodes = [];
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x - 1, node.y - 1);
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x    , node.y - 1);
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x + 1, node.y - 1);
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x - 1, node.y    );
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x + 1, node.y    );
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x - 1, node.y + 1);
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x    , node.y + 1);
-  this.addNewAdjacentNodeToArray(adjacentNodes, node.x, node.y, node.x + 1, node.y + 1);
+  var neighborNodeCoordinates = [
+    { x: node.x - 1, y: node.y - 1 },
+    { x: node.x    , y: node.y - 1 },
+    { x: node.x + 1, y: node.y - 1 },
+    { x: node.x - 1, y: node.y     },
+    { x: node.x + 1, y: node.y     },
+    { x: node.x - 1, y: node.y + 1 },
+    { x: node.x    , y: node.y + 1 },
+    { x: node.x + 1, y: node.y + 1 },
+  ];
 
-  return adjacentNodes;
+  var neighborNodes = [];
+  for (var i in neighborNodeCoordinates) {
+    var coords = neighborNodeCoordinates[i];
+    if (this.isAccessible(node.x, node.y, coords.x, coords.y)) {
+      neighborNodes.push(coords);
+    }
+  }
+
+  return neighborNodes;
 };
 
 SeekrGrid2DDelegate.prototype.heuristic = function(startNode, endNode) {
