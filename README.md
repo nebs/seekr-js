@@ -111,3 +111,9 @@ artist.draw(grid);
 ```
 
 The bulk of the work is done by `seekr.seek()`. The rest of the code is primarily for setting up and drawing the grid.
+
+Tests
+------
+SeekrJS comes with a set of Jasmine specs. Each spec can be found under `/test/specs/`.
+
+To run the tests simply open `/test/index.html`.
