@@ -17,7 +17,7 @@ How it works
 -------------
 The pathfinding is handled by [Seekr](seekr.js).
 
-`Seekr` knows nothing about how your nodes are structures. For that, it relies on the delegate.
+`Seekr` knows nothing about how your nodes are structured. For that, it relies on the delegate.
 
 Once you initialize `Seekr` with a delegate, simply call `seek()` and it will return an array of nodes representing the shortest path between the start and end nodes.
 
