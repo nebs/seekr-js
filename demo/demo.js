@@ -7,6 +7,7 @@ window.onload = function() {
                              [0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
                              [0, 1, 2, 1, 0, 1, 0, 0, 0, 0],
                              [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+                             [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]),
       canvas   = document.getElementById('main-canvas'),
       artist   = new Grid2DArtist(grid, canvas),
