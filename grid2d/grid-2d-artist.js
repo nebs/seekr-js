@@ -1,4 +1,5 @@
-function Grid2DArtist(canvas) {
+function Grid2DArtist(grid, canvas) {
+  this.grid   = grid;
   this.canvas = canvas;
   this.ctx    = canvas.getContext('2d');
   this.width  = canvas.width;
@@ -6,12 +7,12 @@ function Grid2DArtist(canvas) {
   this.colors = ['white', 'black', 'blue', 'red', 'yellow'];
 }
 
-Grid2DArtist.prototype.draw = function(grid) {
-  var cellHeight = this.height / grid.rowCount(),
-      cellWidth  = this.width / grid.colCount();
+Grid2DArtist.prototype.draw = function() {
+  var cellHeight = this.height / this.grid.rowCount(),
+      cellWidth  = this.width  / this.grid.colCount();
 
   // Draw the grid
- grid.loop(function(x, y, cell, yPx) {
+  this.grid.loop(function(x, y, cell, yPx) {
     var xPx = x * cellWidth;
     this.ctx.fillStyle = this.colors[cell];
     this.ctx.fillRect(xPx, yPx, cellWidth, cellHeight);

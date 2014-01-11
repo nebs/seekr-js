@@ -92,9 +92,6 @@ grid = new Grid2D([[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
                    [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]);
 
-// Create the artist by feeding it a Canvas object
-artist = new Grid2DArtist(document.getElementById('main-canvas'));
-
 // Create the delegate by feeding it the grid
 delegate = new SeekrGrid2DDelegate(grid);
 
@@ -107,7 +104,9 @@ path = seekr.seek();
 // Optionally update the grid to include the path (for drawing)
 
 // Draw the grid
-artist.draw(grid);
+canvas = document.getElementById('main-canvas');
+artist = new Grid2DArtist(grid, canvas;
+artist.draw();
 ```
 
 The bulk of the work is done by `seekr.seek()`. The rest of the code is primarily for setting up and drawing the grid.

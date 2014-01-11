@@ -8,7 +8,8 @@ window.onload = function() {
                              [0, 1, 2, 1, 0, 1, 0, 0, 0, 0],
                              [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]),
-      artist   = new Grid2DArtist(document.getElementById('main-canvas')),
+      canvas   = document.getElementById('main-canvas'),
+      artist   = new Grid2DArtist(grid, canvas),
       delegate = new SeekrGrid2DDelegate(grid),
       seekr    = new Seekr(delegate),
       path     = seekr.seek();
@@ -25,5 +26,5 @@ window.onload = function() {
     return true;
   });
 
-  artist.draw(grid);
+  artist.draw();
 }
